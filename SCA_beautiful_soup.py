@@ -1,13 +1,12 @@
-#!/usr/bin/env python
-# -*- coding: iso-8859-15 -*-
+#!/usr/bin/python3
+import urllib.request
 from bs4 import BeautifulSoup as bs
 
-f = open('certified-home-brewer', 'r')
-g = open('coffeelist.txt', 'w')
-soup = bs(f, 'html.parser')
-mydivs = soup.findAll("div", {"class": "image-slide-title"})
-for div in mydivs:
-    g.write(div.text.encode('utf-8') + '\n')
-f.close()
-g.close()
-
+HTML_FILE = urllib.request.urlopen('https://sca.coffee/certified-home-brewer')
+OUTPUT_FILE = open('coffeelist.txt', 'w')
+SOUP = bs(HTML_FILE, 'html.parser')
+DIVS = SOUP.findAll("div", {"class": "image-slide-title"})
+for div in DIVS:
+    OUTPUT_FILE.write(div.text + '\n')
+HTML_FILE.close()
+OUTPUT_FILE.close()
